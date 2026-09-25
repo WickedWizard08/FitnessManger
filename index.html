@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RepRight workout tracker">
+  <title>RepRight | Workout Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" data-view="home"><span class="brand-mark">R</span><span>RepRight</span></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation">☰</button>
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="#home" data-view="home">Home</a>
+      <a href="#workouts" data-view="workouts">Workouts</a>
+      <a href="#progress" data-view="progress">Progress</a>
+      <a href="#assistant" data-view="assistant">AI Assistant</a>
+      <a href="#calendar" data-view="calendar">Calendar</a>
+      <a href="#exercises" data-view="exercises">Exercises</a>
+      <a href="#profile" data-view="profile">Profile</a>
+    </nav>
+    <button class="avatar" type="button" data-view="profile" aria-label="Open profile">G</button>
+  </header>
+
+  <main class="app-shell">
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <section class="view active" id="view-home" data-page="home">
+      <div class="page-heading"><div><p class="eyebrow">WELCOME BACK</p><h1>Today's Workout</h1><p class="muted" id="homeGreeting">Small steps. Stronger you.</p></div><span class="date-pill" id="todayLabel"></span></div>
+      <div class="hero-card"><div><p class="eyebrow light">YOUR PLAN FOR TODAY</p><h2 id="homeWorkoutTitle">Chest &amp; Shoulders</h2><p>Build strength with focused, trackable sets.</p></div><span class="hero-icon">↗</span></div>
+      <div class="section-toolbar"><div><h2 class="section-title">Choose a workout</h2><p class="muted">Pick a plan, then log every set.</p></div><select id="categorySelect" aria-label="Choose workout category"></select></div>
+      <div class="exercise-grid" id="homeExerciseList"></div>
+      <div class="action-row"><button class="button primary" id="startWorkoutButton" type="button">Start Workout <span>→</span></button><button class="button secondary" data-view="workouts" type="button">View My Workouts</button></div>
+    </section>
+
+    <section class="view" id="view-workout" data-page="workout">
+      <div class="page-heading"><div><p class="eyebrow">ACTIVE SESSION</p><h1 id="activeWorkoutTitle">Workout</h1><p class="muted">Log your work one set at a time.</p></div><button class="button text-button" data-view="home" type="button">← Exit workout</button></div>
+      <div class="progress-track"><span id="workoutProgressBar"></span></div><p class="progress-copy" id="workoutProgressCopy"></p>
+      <div class="workout-layout"><article class="card workout-card"><div class="exercise-number" id="activeExerciseNumber">01</div><h2 id="activeExerciseName"></h2><p class="muted" id="activeExerciseMuscle"></p><div class="recommendation-grid" id="activeRecommendation"></div><div class="instruction-box"><strong>How to perform it</strong><p id="activeInstructions"></p></div><h3>Log your set</h3><form id="setForm" class="set-form"><label>Weight (lbs)<input id="setWeight" type="number" min="0" step="0.5" required></label><label>Reps completed<input id="setReps" type="number" min="1" step="1" required></label><button class="button primary" type="submit">Save Set</button></form><div id="savedSets" class="saved-sets"></div><div class="action-row"><button class="button secondary" id="nextExerciseButton" type="button">Next Exercise →</button><button class="button success" id="finishWorkoutButton" type="button">Finish Workout ✓</button></div></article><aside class="card workout-sidebar"><h3>Today's exercises</h3><div id="workoutExerciseNav"></div></aside></div>
+    </section>
+
+    <section class="view" id="view-workouts" data-page="workouts">
+      <div class="page-heading"><div><p class="eyebrow">YOUR TRAINING LOG</p><h1>My Workouts</h1><p class="muted">Every session is a step forward.</p></div><button class="button primary" id="createWorkoutButton" type="button">+ Create Workout</button></div>
+      <div id="historyList" class="history-list"></div>
+      <div id="creatorPanel" class="card creator-panel hidden"><div class="section-toolbar"><div><h2 class="section-title">Create a custom workout</h2><p class="muted">Make a plan that fits your goals.</p></div><button class="icon-button" id="closeCreatorButton" type="button" aria-label="Close creator">×</button></div><form id="creatorForm"><label>Workout name<input id="creatorName" type="text" maxlength="50" placeholder="e.g. Saturday Strength" required></label><div id="creatorExercises"></div><button class="button secondary" id="addCreatorExerciseButton" type="button">+ Add exercise</button><div class="action-row"><button class="button primary" type="submit">Save Workout</button></div></form></div>
+    </section>
+
+    <section class="view" id="view-progress" data-page="progress">
+      <div class="page-heading"><div><p class="eyebrow">YOUR NUMBERS</p><h1>Progress</h1><p class="muted">Consistency turns into strength.</p></div></div><div class="stat-grid" id="progressStats"></div><div class="chart-grid"><article class="card chart-card"><div class="section-toolbar"><div><h2 class="section-title">Workouts per week</h2><p class="muted">Your last four weeks</p></div></div><div class="bar-chart" id="weeklyChart"></div></article><article class="card chart-card"><div class="section-toolbar"><div><h2 class="section-title">Weight over time</h2><p class="muted">Select an exercise</p></div><select id="progressExerciseSelect"></select></div><div class="line-chart" id="weightChart"></div></article></div>
+    </section>
+
+    <section class="view" id="view-assistant" data-page="assistant">
+      <div class="page-heading"><div><p class="eyebrow">COACHING, SIMPLIFIED</p><h1>AI Assistant</h1><p class="muted">Ask a question and get a helpful starting point.</p></div><span class="status-dot">● Online</span></div><div class="card chat-card"><div id="chatMessages" class="chat-messages"></div><form id="chatForm" class="chat-form"><input id="chatInput" type="text" placeholder="Ask about form, reps, chest, legs..." autocomplete="off" required><button class="button primary" type="submit">Send</button></form></div>
+    </section>
+
+    <section class="view" id="view-calendar" data-page="calendar">
+      <div class="page-heading"><div><p class="eyebrow">PLAN AHEAD</p><h1>Workout Calendar</h1><p class="muted">Schedule sessions and make them happen.</p></div></div><div class="calendar-layout"><article class="card calendar-card"><div class="calendar-header"><button class="icon-button" id="previousMonthButton" type="button" aria-label="Previous month">←</button><h2 id="calendarMonth"></h2><button class="icon-button" id="nextMonthButton" type="button" aria-label="Next month">→</button></div><div class="calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div><div id="calendarGrid" class="calendar-grid"></div></article><article class="card schedule-card"><p class="eyebrow">SCHEDULE SESSION</p><h2 id="selectedDateLabel">Select a date</h2><form id="calendarForm"><label>Workout<select id="calendarWorkoutSelect"></select></label><button class="button primary" type="submit">Save to Calendar</button></form><div id="scheduledEvents" class="scheduled-events"></div></article></div>
+    </section>
+
+    <section class="view" id="view-exercises" data-page="exercises">
+      <div class="page-heading"><div><p class="eyebrow">LEARN THE MOVES</p><h1>Exercise Library</h1><p class="muted">Simple guidance for your next session.</p></div><input class="search-input" id="exerciseSearch" type="search" placeholder="Search exercises..."></div><div class="library-grid" id="exerciseLibrary"></div>
+    </section>
+
+    <section class="view" id="view-profile" data-page="profile">
+      <div class="page-heading"><div><p class="eyebrow">YOUR REP RIGHT</p><h1>Profile</h1><p class="muted">Set your focus and make the app yours.</p></div></div><div class="profile-layout"><article class="card profile-card"><div class="profile-avatar">G</div><h2 id="profileNameDisplay">Your Profile</h2><p class="muted" id="profileGoalDisplay">Tell us about your goals.</p></article><form class="card profile-form" id="profileForm"><label>Name<input id="profileName" type="text" maxlength="40" placeholder="Your name" required></label><label>Fitness goal<select id="profileGoal"><option value="Strength">Strength</option><option value="Muscle Building">Muscle Building</option><option value="General Fitness">General Fitness</option><option value="Endurance">Endurance</option></select></label><label>Experience level<select id="profileExperience"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label><button class="button primary" type="submit">Save Profile</button></form></div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
